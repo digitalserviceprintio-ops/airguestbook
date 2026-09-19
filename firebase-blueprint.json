@@ -1,0 +1,112 @@
+{
+  "entities": {
+    "Guest": {
+      "title": "Guest",
+      "description": "Tamu undangan pernikahan dengan meja alokasi dan status kehadiran",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "description": "ID unik tamu" },
+        "name": { "type": "string", "maxLength": 100, "description": "Nama lengkap tamu" },
+        "phone": { "type": "string", "maxLength": 30, "description": "Nomor WhatsApp atau kontak tamu" },
+        "category": { "type": "string", "maxLength": 50, "description": "Kategori hubungan tamu (VIP, Keluarga, dll)" },
+        "table": { "type": "string", "maxLength": 50, "description": "Meja tempat duduk tamu" },
+        "pax": { "type": "number", "description": "Jumlah pax yang hadir" },
+        "rsvpStatus": { "type": "string", "enum": ["Hadir", "Berhalangan", "Menunggu"], "description": "Status RSVP tamu" },
+        "attendanceStatus": { "type": "string", "enum": ["Sudah Hadir", "Belum Hadir"], "description": "Status check-in aktual di venue" },
+        "checkInTime": { "type": "string", "maxLength": 50, "description": "Waktu check-in tamu" },
+        "souvenirTaken": { "type": "boolean", "description": "Apakah souvenir sudah diambil" },
+        "souvenirCount": { "type": "number", "description": "Jumlah paket souvenir yang diserahkan" },
+        "envelopeAmount": { "type": "number", "description": "Nominal amplop jika ada" },
+        "paymentMethod": { "type": "string", "maxLength": 50, "description": "Metode pembayaran amplop digital/tunai" },
+        "giftName": { "type": "string", "maxLength": 100, "description": "Kado fisik jika membawa kado" },
+        "avatarUrl": { "type": "string", "maxLength": 255, "description": "URL foto avatar tamu" },
+        "avatarInitials": { "type": "string", "maxLength": 10, "description": "Inisial nama tamu" }
+      },
+      "required": ["id", "name", "category", "table", "pax", "rsvpStatus", "attendanceStatus", "souvenirTaken", "souvenirCount"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Catatan donasi amplop digital dan kado fisik masuk",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "description": "ID transaksi" },
+        "senderName": { "type": "string", "maxLength": 100, "description": "Nama pengirim amplop" },
+        "relation": { "type": "string", "maxLength": 50, "description": "Hubungan keluarga/rekan" },
+        "amount": { "type": "number", "description": "Nominal amplop dalam Rupiah" },
+        "method": { "type": "string", "maxLength": 50, "description": "Metode pembayaran" },
+        "timeAgo": { "type": "string", "maxLength": 50, "description": "Keterangan waktu" },
+        "message": { "type": "string", "maxLength": 300, "description": "Pesan ucapan restu" },
+        "verified": { "type": "boolean", "description": "Status verifikasi QRIS / Bank" },
+        "avatarInitials": { "type": "string", "maxLength": 10, "description": "Inisial nama pengirim" }
+      },
+      "required": ["id", "senderName", "relation", "amount", "method", "verified"]
+    },
+    "WishlistItem": {
+      "title": "WishlistItem",
+      "description": "Item registri kado pernikahan dari calon pengantin",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "description": "ID item kado" },
+        "name": { "type": "string", "maxLength": 100, "description": "Nama produk kado" },
+        "priceEstimate": { "type": "string", "maxLength": 50, "description": "Estimasi harga" },
+        "status": { "type": "string", "enum": ["Telah Diberikan", "Sedang Dikirim", "Masih Tersedia"], "description": "Status ketersediaan kado" },
+        "giver": { "type": "string", "maxLength": 100, "description": "Nama pemberi kado jika ada" },
+        "deliveryNote": { "type": "string", "maxLength": 200, "description": "Catatan lokasi penyerahan kado" },
+        "courier": { "type": "string", "maxLength": 50, "description": "Ekspedisi logistik" },
+        "trackingNo": { "type": "string", "maxLength": 60, "description": "Nomor resi pengiriman" }
+      },
+      "required": ["id", "name", "priceEstimate", "status", "deliveryNote"]
+    },
+    "GuestWish": {
+      "title": "GuestWish",
+      "description": "Pesan doa restu dan ucapan hangat dari tamu untuk proyektor panggung",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 64, "description": "ID ucapan" },
+        "author": { "type": "string", "maxLength": 100, "description": "Nama tamu yang mendoakan" },
+        "role": { "type": "string", "maxLength": 50, "description": "Peran atau hubungan tamu" },
+        "message": { "type": "string", "maxLength": 300, "description": "Isi doa restu" },
+        "likes": { "type": "number", "description": "Jumlah apresiasi/tepuk tangan" },
+        "giftTag": { "type": "string", "maxLength": 100, "description": "Tag amplop atau kado jika ada" },
+        "avatarInitials": { "type": "string", "maxLength": 10, "description": "Inisial avatar" },
+        "avatarBg": { "type": "string", "maxLength": 50, "description": "Warna latar inisial avatar" }
+      },
+      "required": ["id", "author", "message", "likes"]
+    },
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Profil pengguna penyelenggara acara atau operator concierge",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128, "description": "Firebase UID user" },
+        "name": { "type": "string", "maxLength": 100, "description": "Nama pengguna" },
+        "email": { "type": "string", "maxLength": 120, "description": "Alamat email" },
+        "role": { "type": "string", "enum": ["Mempelai", "Wedding Organizer", "Operator Concierge"], "description": "Peran akun" },
+        "eventName": { "type": "string", "maxLength": 120, "description": "Nama acara yang dikelola" }
+      },
+      "required": ["id", "name", "email", "role", "eventName"]
+    }
+  },
+  "firestore": {
+    "/guests/{guestId}": {
+      "schema": "Guest",
+      "description": "Koleksi daftar tamu undangan pernikahan"
+    },
+    "/transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Koleksi amplop digital dan kado fisik yang tercatat"
+    },
+    "/wishlist/{itemId}": {
+      "schema": "WishlistItem",
+      "description": "Daftar registri kado dari calon pengantin"
+    },
+    "/wishes/{wishId}": {
+      "schema": "GuestWish",
+      "description": "Ucapan doa restu tamu yang tayang di layar panggung"
+    },
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Profil pengguna yang terdaftar"
+    }
+  }
+}

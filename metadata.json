@@ -1,0 +1,6 @@
+{
+  "name": "AirGuest",
+  "description": "Modern Touchless Concierge & Guest Experience for weddings and events with AirDrop proximity check-in, digital envelopes, and gift registry.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
